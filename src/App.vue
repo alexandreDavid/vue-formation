@@ -15,30 +15,45 @@
       </button>
     </form>
   </nav>
-  <div v-if="searchedValue">Ma recherche est : {{ valueToSearchInput }} - {{ searchedValue }}</div>
-  <div class="alert alert-info" role="alert" v-else>
-    Saisissez le nom d'un titre pour rechecher un film.
+  <div class="container mt-3">
+    <div>Ma recherche est : {{ valueToSearchInput }} - {{ searchedValue }}</div>
+    <div class="alert alert-info" role="alert" v-if="!searchedValue">
+      Saisissez le nom d'un titre pour rechecher un film.
+    </div>
+    <h4>Historique</h4>
+    <div class="list-group">
+      <SearchHistoricValue
+        v-for="(searchHistoryValue, key) in searchHistoryValues"
+        :key="key"
+        :value="searchHistoryValue"
+        @reset-search="changeSearch"/>
+    </div>
   </div>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SearchHistoricValue from './components/SearchHistoricValue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    SearchHistoricValue
   },
   data () {
     return {
       valueToSearchInput: '',
-      searchedValue: ''
+      searchedValue: '',
+      searchHistoryValues: []
     }
   },
   methods: {
     search (search) {
       this.searchedValue = search
+      this.searchHistoryValues.unshift(search);
+    },
+    changeSearch (newValue) {
+      this.searchedValue = newValue
+      this.valueToSearchInput = newValue
     }
   }
 }
