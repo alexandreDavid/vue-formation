@@ -1,59 +1,48 @@
 <template>
-  <nav class="navbar navbar-dark bg-dark">
+  <nav class="navbar navbar-dark bg-dark navbar-expand">
     <a class="navbar-brand" href="/">
       <img class="logo" alt="Vue logo" src="./assets/logo.png">
       SeekMovie
     </a>
-    <form class="form-inline" @submit.prevent="search(valueToSearchInput)">
-      <input class="form-control mr-sm-2"
-        v-model="valueToSearchInput"
-        type="search"
-        placeholder="Saisissez un titre"
-        aria-label="Saisissez un titre">
-      <button class="btn btn-success my-2 my-sm-0" type="submit">
-        Rechercher
-      </button>
-    </form>
+    <div class="collapse navbar-collapse justify-content-between">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <router-link class="nav-link" to="/">Accueil</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/about">A propos</router-link>
+        </li>
+      </ul>
+      <form class="form-inline" @submit.prevent="search(valueToSearchInput)">
+        <input class="form-control mr-sm-2"
+          v-model="valueToSearchInput"
+          type="search"
+          placeholder="Saisissez un titre"
+          aria-label="Saisissez un titre">
+        <button class="btn btn-success my-2 my-sm-0" type="submit">
+          Rechercher
+        </button>
+      </form>
+    </div>
   </nav>
-  <div class="container mt-3">
-    <div>Ma recherche est : {{ valueToSearchInput }} - {{ searchedValue }}</div>
-    <div class="alert alert-info" role="alert" v-if="!searchedValue">
-      Saisissez le nom d'un titre pour rechecher un film.
-    </div>
-    <h4>Historique</h4>
-    <div class="list-group">
-      <SearchHistoricValue
-        v-for="(searchHistoryValue, key) in searchHistoryValues"
-        :key="key"
-        :value="searchHistoryValue"
-        @reset-search="changeSearch"/>
-    </div>
-  </div>
+  <router-view/>
 </template>
 
 <script>
-import SearchHistoricValue from './components/SearchHistoricValue'
+import SearchHistory from '@/store/search-history'
 
 export default {
   name: 'App',
-  components: {
-    SearchHistoricValue
-  },
   data () {
     return {
       valueToSearchInput: '',
-      searchedValue: '',
-      searchHistoryValues: []
+      searchedValue: ''
     }
   },
   methods: {
     search (search) {
       this.searchedValue = search
-      this.searchHistoryValues.unshift(search);
-    },
-    changeSearch (newValue) {
-      this.searchedValue = newValue
-      this.valueToSearchInput = newValue
+      SearchHistory.add(search)
     }
   }
 }
