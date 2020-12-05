@@ -43,6 +43,7 @@ export default {
     search (search) {
       this.searchedValue = search
       SearchHistory.add(search)
+      this.$router.push({ path: 'result', query: { search } })
     }
   }
 }
