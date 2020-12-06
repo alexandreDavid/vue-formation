@@ -1,0 +1,55 @@
+<html>
+  <body>
+    <div id="app-a">
+      {{sharedState.message}}
+      <button @click="clearMessageAction">Reset message</button>
+    </div>
+    <div id="app-b">
+      {{sharedState.message}}
+      <button @click="setMessageAction('Changé')">Change message</button>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const store = {
+        state: Vue.reactive({
+          message: 'Hello!'
+        }),
+
+        setMessageAction(newValue) {
+          this.state.message = newValue
+        },
+
+        clearMessageAction() {
+          this.state.message = ''
+        }
+      }
+
+      const appA = Vue.createApp({
+        data() {
+          return {
+            privateState: {},
+            sharedState: store.state
+          }
+        },
+        mounted() {
+          store.setMessageAction('Goodbye!')
+        },
+        methods: {
+          clearMessageAction() { store.clearMessageAction() }
+        }
+      }).mount('#app-a')
+
+      const appB = Vue.createApp({
+        data() {
+          return {
+            privateState: {},
+            sharedState: store.state
+          }
+        },
+        methods: {
+          setMessageAction(message) { store.setMessageAction(message) }
+        }
+      }).mount('#app-b')
+    </script>
+  </body>
+</html>
