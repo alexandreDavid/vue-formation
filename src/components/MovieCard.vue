@@ -10,7 +10,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import MoviesApi from '@/api/movies'
+
 export default {
   name: 'MovieCard',
   props: {
@@ -30,7 +31,7 @@ export default {
   },
   methods: {
     async fetchMovie () {
-      this.movieDetails = (await axios.get(`http://www.omdbapi.com/?i=${this.movie.imdbID}&apikey=48d1aa`)).data
+      this.movieDetails = await MoviesApi.get(this.movie.imdbID)
     }
   }
 }

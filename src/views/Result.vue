@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import MoviesApi from '@/api/movies'
 import MovieCard from '@/components/MovieCard';
 
 export default {
@@ -35,9 +35,9 @@ export default {
     this.fetchMovies()
   },
   methods: {
-    async fetchMovies (page = 1) {
+    async fetchMovies () {
       this.loading = true
-      const response = (await axios.get(`http://www.omdbapi.com/?s=${this.$route.query.search}&apikey=48d1aa&type=movie&page=${page}`)).data
+      const response = await MoviesApi.find(this.$route.query.search)
       this.movies = response.Search
       this.totalResults = response.totalResults || 0
       this.loading = false
