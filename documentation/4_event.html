@@ -1,18 +1,38 @@
 <html>
   <body>
     <div id="basic-event">
-      <button @click="counter += 1">Add 1</button>
+      <button-counter @increment="counter += 10"></button-counter>
       <p>The button above has been clicked {{ counter }} times.</p>
     </div>
     <script src="https://unpkg.com/vue@next"></script>
     <script>
-      Vue.createApp({
+      const app = Vue.createApp({
         data() {
           return {
             counter: 0
           }
         }
-      }).mount('#basic-event')
+      })
+
+      app.component('button-counter', {
+        data() {
+          return {
+            count: 0
+          }
+        },
+        methods: {
+          addOne () {
+            this.count++
+            this.$emit('increment')
+          }
+        },
+        template: `
+          <button @click="addOne">
+            You clicked me {{ count }} times.
+          </button>`
+      })
+
+      app.mount('#basic-event')
     </script>
   </body>
 </html>
