@@ -19,7 +19,7 @@
           type="search"
           placeholder="Saisissez un titre"
           aria-label="Saisissez un titre">
-        <button class="btn btn-success my-2 my-sm-0" type="submit">
+        <button class="btn btn-success my-2 my-sm-0" type="submit" :disabled="!isButtonEnable">
           Rechercher
         </button>
       </form>
@@ -35,7 +35,8 @@ export default {
   data () {
     return {
       valueToSearchInput: '',
-      searchedValue: ''
+      searchedValue: '',
+      isButtonEnable: false
     }
   },
   methods: {
@@ -43,6 +44,11 @@ export default {
       this.searchedValue = search
       SearchHistory.add(search)
       this.$router.push({ path: 'result', query: { search } })
+    }
+  },
+  watch: {
+    valueToSearchInput(value) {
+      this.isButtonEnable = value.length > 2
     }
   }
 }
