@@ -2,7 +2,8 @@
   <body>
     <div id="app" class="demo">
       <alert-box>
-        Something bad happened.
+        <div style="background-color: red;">Something bad happened.</div>
+        <h1 v-slot:subContent>Here might be a page title</h1>
       </alert-box>
       <alert-box>
         Something bad happened 2.
@@ -18,6 +19,7 @@
           <div class="demo-alert-box">
             <strong>Error!</strong>
             <slot></slot>
+            <slot name="subContent"></slot>
           </div>
         `
       })
