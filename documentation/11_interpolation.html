@@ -1,0 +1,28 @@
+<html>
+  <body>
+    <div id="app">
+      <input v-model="msg">
+      <p><span>Message: {{ msg }}</span></p>
+      <p><span v-once>This will never change: {{ msg }}</span></p>
+
+      <input v-model="rawHtml">
+      <p>Using mustaches: {{ rawHtml }}</p>
+      <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      // Create a Vue application
+      const App = {
+        name: 'Mon Composant',
+        data() {
+          return {
+            msg: 'Message initial',
+            rawHtml: '<span style="color: red;">Raw HTML</span>'
+          }
+        }
+      }
+
+      Vue.createApp(App).mount('#app')
+    </script>
+  </body>
+</html>

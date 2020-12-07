@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <style>
+      .red {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <p><button-counter class="red" disabled></button-counter></p>
+      <p><button-counter-deactivated class="red" disabled></button-counter-deactivated></p>
+      <p><button-counter-multi class="red" disabled></button-counter-multi></p>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      // Create a Vue application
+      const app = Vue.createApp({})
+
+      // Define a new global component called button-counter
+      app.component('button-counter', {
+        name: 'Mon Composant',
+        data() {
+          return {
+            count: 0
+          }
+        },
+        template: `
+          <button @click="count++">
+            Classique : You clicked me {{ count }} times.
+          </button>`
+      })
+
+      app.component('button-counter-deactivated', {
+        name: 'Mon Composant Attributs désactivés',
+        inheritAttrs: false,
+        data() {
+          return {
+            count: 0
+          }
+        },
+        template: `
+          <button @click="count++">
+            Attributs désactivés : You clicked me {{ count }} times.
+          </button>`
+      })
+
+      app.component('button-counter-multi', {
+        name: 'Mon Composant Multi',
+        inheritAttrs: false,
+        data() {
+          return {
+            count: 0
+          }
+        },
+        template: `
+          <button @click="count++">
+            Multi 1 : You clicked me {{ count }} times.
+          </button>
+          <button @click="count++" v-bind="$attrs">
+            Multi 2 : You clicked me {{ count }} times.
+          </button>`
+      })
+
+      app.mount('#app')
+    </script>
+  </body>
+</html>
