@@ -1,0 +1,82 @@
+<html>
+  <body>
+    <div id="app">
+      <p><composant-1></composant-1></p>
+      <p><composant-2></composant-2></p>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const myMixin = {
+        data() {
+          return {
+            message: 'From mixin'
+          }
+        },
+        created() {
+          console.log('created mixin')
+        },
+        methods: {
+          foo() {
+            console.log('foo')
+          },
+          conflicting() {
+            console.log('from mixin')
+          }
+        }
+      }
+
+      // Create a Vue application
+      const app = Vue.createApp({})
+
+      // Define a new global component called button-counter
+      app.component('composant-1', {
+        data() {
+          return {
+            message: 'From composant-1'
+          }
+        },
+        mixins: [myMixin],
+        inheritAttrs: false,
+        methods: {
+          bar() {
+            console.log('bar')
+          },
+          conflicting() {
+            console.log('from self')
+          }
+        },
+        template: `
+          {{ message }}
+          <button @click="conflicting">
+            conflicting composant 1
+          </button>
+          <button @click="bar">
+            bar composant 1
+          </button>`
+      })
+
+      app.component('composant-2', {
+        mixins: [myMixin],
+        inheritAttrs: false,
+        created() {
+          console.log('created composant-2')
+        },
+        methods: {
+          bar() {
+            console.log('bar')
+          }
+        },
+        template: `
+          {{ message }}
+          <button @click="conflicting">
+            conflicting from mixin
+          </button>
+          <button @click="bar">
+            bar composant 2
+          </button>`
+      })
+
+      app.mount('#app')
+    </script>
+  </body>
+</html>
