@@ -1,0 +1,87 @@
+<html>
+  <body>
+    <div id="app">
+      <form
+        @submit.prevent="checkForm">
+        <label for="text">Texte</label>
+        <p><input v-model="texte" id="text" placeholder="text" /></p>
+        <p>Texte : {{ texte }}</p>
+
+        <div id="v-model-multiple-checkboxes" style="margin-bottom: 20px;">
+          <input type="checkbox" id="jack" value="Jack" v-model="checkedNames" />
+          <label for="jack">Jack</label>
+          <input type="checkbox" id="john" value="John" v-model="checkedNames" />
+          <label for="john">John</label>
+          <input type="checkbox" id="mike" value="Mike" v-model="checkedNames" />
+          <label for="mike">Mike</label>
+          <br />
+          <span>Checked names: {{ checkedNames }}</span>
+        </div>
+
+        <div id="v-model-radiobutton" style="margin-bottom: 20px;">
+          <input type="radio" id="one" value="One" v-model="picked" />
+          <label for="one">One</label>
+          <br />
+          <input type="radio" id="two" value="Two" v-model="picked" />
+          <label for="two">Two</label>
+          <br />
+          <span>Picked: {{ picked }}</span>
+        </div>
+
+        <div id="v-model-select-dynamic" class="demo" style="margin-bottom: 20px;">
+          <select v-model="selected">
+            <option v-for="option in options" :value="option.value">
+              {{ option.text }}
+            </option>
+          </select>
+          <span>Selected: {{ selected }}</span>
+        </div>
+
+        <button type="submit">
+          Valider
+        </button>
+
+        <div v-if="errors.length">
+          <ul v-for="error in errors" style="background: lightcoral;">
+            {{ error }}
+          </ul>
+        </div>
+        <div v-else-if="checked" style="background: lightgreen;">
+          Formulaire valide
+        </div>
+      </form>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            texte: '',
+            checkedNames: [],
+            picked: '',
+            selected: 'A',
+            options: [
+              { text: 'One', value: 'A' },
+              { text: 'Two', value: 'B' },
+              { text: 'Three', value: 'C' }
+            ],
+            errors: [],
+            checked: false
+          }
+        },
+        methods: {
+          checkForm (event) {
+            this.errors = []
+            if (!this.texte) {
+              this.errors.push('Le texte est obligatoire')
+            }
+            if (!this.checkedNames.length) {
+              this.errors.push('Au moins un nom doit être sélectionné')
+            }
+            this.checked = true
+          }
+        }
+      }).mount('#app')
+    </script>
+  </body>
+</html>
