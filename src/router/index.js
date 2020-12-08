@@ -27,6 +27,11 @@ const routes = [
       next()
     }
   },
+  {
+    path: '/my-list',
+    name: 'MyList',
+    component: () => import('../views/MyList.vue')
+  },
   { path: '/:pathMatch(.*)', redirect: { name: 'Home' } }
 ]
 

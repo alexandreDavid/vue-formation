@@ -12,6 +12,9 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/about">A propos</router-link>
         </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/my-list">Ma liste</router-link>
+        </li>
       </ul>
       <form class="form-inline" @submit.prevent="search(valueToSearchInput)">
         <input class="form-control mr-sm-2"
