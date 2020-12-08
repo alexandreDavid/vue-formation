@@ -18,8 +18,16 @@ const routes = [
   {
     path: '/result',
     name: 'Result',
-    component: () => import('../views/Result.vue')
-  }
+    component: () => import('../views/Result.vue'),
+    beforeEnter: (to, from, next) => {
+      if (!to.query || !to.query.search) {
+        next({ name: 'Home' })
+      }
+      // if the search is empty we go back to the home page
+      next()
+    }
+  },
+  { path: '/:pathMatch(.*)', redirect: { name: 'Home' } }
 ]
 
 const router = createRouter({
