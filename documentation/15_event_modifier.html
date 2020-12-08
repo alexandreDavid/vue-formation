@@ -1,0 +1,32 @@
+<html>
+  <body>
+    <div id="app">
+      <p><button-counter></button-counter></p>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      // Create a Vue application
+      const app = Vue.createApp({})
+
+      // Define a new global component called button-counter
+      app.component('button-counter', {
+        name: 'Mon Composant',
+        data() {
+          return {
+            lastClick: 'Aucun click'
+          }
+        },
+        template: `
+          <button
+            @click.exact="lastClick = 'Seulement click'"
+            @click.alt="lastClick = 'Click + alt'"
+            @click.shift="lastClick = 'Click + shift'"
+            >
+            {{ lastClick }}
+          </button>`
+      })
+
+      app.mount('#app')
+    </script>
+  </body>
+</html>
