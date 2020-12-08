@@ -1,19 +1,19 @@
 <template>
   <h4>{{ value }}</h4>
-  <div class="row">
-    <div class="col-3" v-for="(movie, key) in movies" :key="key">
-      <div class="card">
-        <img :src="movie.Poster" class="card-img" :alt="movie.Title">
-      </div>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+    <div class="col" v-for="(movie, key) in movies" :key="key">
+      <MovieCard :movie="movie" class="m-2" />
     </div>
   </div>
 </template>
 
 <script>
 import MoviesApi from '@/api/movies'
+import MovieCard from './MovieCard';
 
 export default {
   name: 'SearchHistoricValue',
+  components: { MovieCard },
   props: {
     value: String
   },

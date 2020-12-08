@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-3">
     <template v-if="!loading">
-      <h1>Resultats ({{ totalResults }})</h1>
+      <h1>{{ resultTotal }}</h1>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
         <div class="col" v-for="(movie, key) in movies" :key="key">
           <MovieCard :movie="movie" class="m-2" />
@@ -42,6 +42,19 @@ export default {
       this.totalResults = response.totalResults || 0
       this.loading = false
     },
+  },
+  computed: {
+    resultTotal() {
+      let resultTotal
+      if (!this.totalResults) {
+        resultTotal = 'Aucun résultat'
+      } else if (this.totalResults === 1) {
+        resultTotal = 'Résultat'
+      } else {
+        resultTotal = `Résultats (${this.totalResults})`
+      }
+      return resultTotal
+    }
   }
 }
 </script>
