@@ -24,7 +24,6 @@ export default {
   },
   async created () {
     const response = await MoviesApi.find(this.value)
-    console.log(response)
     this.movies = response.Search.slice(0, 4)
   },
   methods: {
