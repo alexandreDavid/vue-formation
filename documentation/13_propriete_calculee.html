@@ -26,11 +26,6 @@
           }
         },
         computed: {
-          // a computed getter
-          publishedBooksMessage() {
-            // `this` points to the vm instance
-            return this.author.books.length > 0 ? 'Yes' : 'No'
-          },
           fullName: {
             // getter
             get() {
