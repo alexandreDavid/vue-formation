@@ -34,7 +34,6 @@
 <script>
 import MoviesApi from '@/api/movies'
 import Modal from './Modal'
-import Favourites from '@/store/favourites'
 
 export default {
   name: 'MovieCard',
@@ -48,13 +47,11 @@ export default {
   data () {
     return {
       movieDetails: {},
-      displayModal: false,
-      isFav: false
+      displayModal: false
     }
   },
   async created () {
     this.movieDetails = { ...this.movie }
-    this.isFav = Favourites.inList(this.movie)
     await this.fetchMovie()
   },
   methods: {
@@ -62,12 +59,15 @@ export default {
       this.movieDetails = await MoviesApi.get(this.movie.imdbID)
     },
     addToFav () {
-      Favourites.add(this.movie)
-      this.isFav = true
+      this.$store.commit('addFav', this.movie.imdbID)
     },
     removeFromFav () {
-      Favourites.remove(this.movie)
-      this.isFav = false
+      this.$store.commit('removeFav', this.movie.imdbID)
+    }
+  },
+  computed: {
+    isFav() {
+      return this.$store.getters.isFav(this.movie.imdbID)
     }
   }
 }

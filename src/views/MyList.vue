@@ -10,15 +10,14 @@
 </template>
 
 <script>
-import MovieCard from '@/components/MovieCard';
-import Favourites from '@/store/favourites'
+import MovieCard from '@/components/MovieCard'
 
 export default {
   name: 'MyList',
   components: { MovieCard },
   computed: {
     movies() {
-      return Favourites.state.list.value
+      return this.$store.state.favourites
     },
     resultTotal() {
       let resultTotal
