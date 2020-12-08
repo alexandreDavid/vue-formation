@@ -1,19 +1,38 @@
 <template>
-  <div class="card">
+  <div class="card" @click="displayModal = true" v-bind="$attrs">
     <img :src="movieDetails.Poster" class="card-img" :alt="movieDetails.Title">
     <div class="card-body">
       <h5 class="card-title">{{ movieDetails.Title }}</h5>
       <p class="card-text">Director: {{ movieDetails.Director }}</p>
-      <p class="card-text">Year: {{ movieDetails.Year }}</p>
+      <p class="card-text">Année: {{ movieDetails.Year }}</p>
     </div>
   </div>
+  <Modal v-if="displayModal" @close="displayModal = false">
+    <template #header>
+      <h5 class="modal-title">{{ movieDetails.Title }}</h5>
+    </template>
+      <div class="row no-gutters">
+      <div class="col-md-4">
+        <img :src="movieDetails.Poster" class="card-img" :alt="movieDetails.Title">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <p class="card-text"><b>Acteurs :</b> {{ movieDetails.Actors }}</p>
+          <p class="card-text"><b>Synopsis :</b> {{ movieDetails.Plot }}</p>
+          <p class="card-text"><small class="text-muted">Date de sortie : {{ movieDetails.Released }}</small></p>
+        </div>
+      </div>
+    </div>
+  </Modal>
 </template>
 
 <script>
 import MoviesApi from '@/api/movies'
+import Modal from './Modal'
 
 export default {
   name: 'MovieCard',
+  components: { Modal },
   props: {
     movie: {
       type: Object,
@@ -22,7 +41,8 @@ export default {
   },
   data () {
     return {
-      movieDetails: {}
+      movieDetails: {},
+      displayModal: false
     }
   },
   async created () {
