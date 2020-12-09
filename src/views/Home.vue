@@ -15,16 +15,15 @@
 
 <script>
 import SearchHistoricValue from '@/components/SearchHistoricValue.vue'
-import SearchHistory from '@/store/search-history'
 
 export default {
   name: 'Home',
   components: {
     SearchHistoricValue
   },
-  data () {
-    return {
-      searchHistoryList: SearchHistory.state.list
+  computed: {
+    searchHistoryList() {
+      return this.$store.state.searchHistory.list
     }
   }
 }

@@ -1,11 +1,13 @@
-import { reactive } from 'vue'
-
 export default {
-  state: reactive({
+  namespaced: true,
+
+  state: () => ({
     list: []
   }),
 
-  add (value) {
-    this.state.list.unshift(value)
+  mutations: {
+    add (state, value) {
+      state.list.unshift(value)
+    }
   }
 }

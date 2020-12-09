@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import SearchHistory from '@/store/search-history'
-
 export default {
   name: 'Navbar',
   data () {
@@ -45,7 +43,7 @@ export default {
   methods: {
     search (search) {
       this.searchedValue = search
-      SearchHistory.add(search)
+      this.$store.commit('searchHistory/add', search)
       this.$router.push({ path: 'result', query: { search } })
     }
   },

@@ -59,15 +59,15 @@ export default {
       this.movieDetails = await MoviesApi.get(this.movie.imdbID)
     },
     addToFav () {
-      this.$store.commit('addFav', this.movie.imdbID)
+      this.$store.commit('favourites/addFav', this.movie.imdbID)
     },
     removeFromFav () {
-      this.$store.commit('removeFav', this.movie.imdbID)
+      this.$store.commit('favourites/removeFav', this.movie.imdbID)
     }
   },
   computed: {
     isFav() {
-      return this.$store.getters.isFav(this.movie.imdbID)
+      return this.$store.getters['favourites/isFav'](this.movie.imdbID)
     }
   }
 }

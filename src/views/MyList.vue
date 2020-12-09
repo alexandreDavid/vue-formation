@@ -17,7 +17,7 @@ export default {
   components: { MovieCard },
   computed: {
     movies() {
-      return this.$store.state.favourites
+      return this.$store.state.favourites.favourites
     },
     resultTotal() {
       let resultTotal
